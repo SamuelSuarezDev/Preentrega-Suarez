@@ -1,0 +1,20 @@
+.container-button {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 10px;
+}
+.number {
+  height: 1px;
+  margin: 0;
+  margin-top: -20px;
+  margin-left: 5px;
+  position: absolute;
+  color: white;
+}
+.car {
+  position: absolute;
+}
+.container-widget {
+  margin-bottom: 40px;
+}
