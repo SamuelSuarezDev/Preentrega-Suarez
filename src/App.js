@@ -1,18 +1,15 @@
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
+import Contador from "./Components/Contador/contador";
 import ItemListContainer from "./Components/ItemListContainer/ItemListContainer";
 
 function App() {
   return (
     <>
-      <header>
-        <div>
-          <Navbar></Navbar>
-        </div>
-      </header>
-      <div>
-        <ItemListContainer />
-      </div>
+      <Navbar></Navbar>
+
+      <ItemListContainer texto={"hola a todos"} />
+      <Contador />
     </>
   );
 }

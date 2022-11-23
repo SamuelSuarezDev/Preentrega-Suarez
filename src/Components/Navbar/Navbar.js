@@ -16,14 +16,15 @@ export const Navbar = () => {
   };
   return (
     <div className="container">
-      <MenuItem className="logo" mode="title" text="S.soccer"></MenuItem>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/2354/2354551.png"
-        alt=""
-        className="more"
-        onClick={handleMenu}
-      />
-
+      <div className="header">
+        <MenuItem className="logo" mode="title" text="S.soccer"></MenuItem>
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2354/2354551.png"
+          alt=""
+          className="more"
+          onClick={handleMenu}
+        />
+      </div>
       <div id="content" className="content">
         <div className="menu-items">
           <MenuItem mode="section" text="Todo"></MenuItem>
