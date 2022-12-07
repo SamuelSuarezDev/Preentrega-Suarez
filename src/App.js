@@ -1,15 +1,20 @@
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
-import Contador from "./Components/Contador/contador";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DetailProduct from "./Components/DetailProduct/DetailProduct";
 import ItemListContainer from "./Components/ItemListContainer/ItemListContainer";
 
 function App() {
   return (
     <>
-      <Navbar></Navbar>
-
-      <ItemListContainer texto={"hola a todos"} />
-      <Contador />
+      <BrowserRouter>
+        <Navbar carNumber={7}></Navbar>
+        <Routes>
+          <Route exact path="/" element={<ItemListContainer />} />
+          <Route exact path="/category/:id" element={<ItemListContainer />} />
+          <Route exact path="/item/:id" element={<DetailProduct />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

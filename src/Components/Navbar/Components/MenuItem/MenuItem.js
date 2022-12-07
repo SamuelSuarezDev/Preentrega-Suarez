@@ -1,7 +1,8 @@
-import React from 'react'
-import CartWidget from '../CartWidget/CartWidget';
+import React from "react";
+import CartWidget from "../CartWidget/CartWidget";
+import { Link } from "react-router-dom";
 
-const MenuItem = ({ mode, text }) => {
+const MenuItem = ({ mode, text, carNumber, to, id }) => {
   let isTitle = false;
   let isSection = false;
   let isCar = false;
@@ -16,23 +17,30 @@ const MenuItem = ({ mode, text }) => {
   }
   return (
     <>
-      {isTitle ?
+      {isTitle && (
         <div>
-          <h1 style={{ cursor: "pointer" }} >{text}</h1>
+          <h1 id={id} style={{ cursor: "pointer" }}>
+            {text}
+          </h1>
         </div>
-        : <>
-          {
-            isSection ?
-              <div >
-                <h3 style={{ cursor: "pointer" }}> {text}</h3>
-              </div >
-              : <>
-                {isCar &&
-                  <CartWidget elements={4}></CartWidget>
-                }</>
-          }</>
-      }</>
-  )
-}
+      )}
+      {isSection && (
+        <Link to={to}>
+          {" "}
+          <h3
+            style={{
+              cursor: "pointer",
+              color: "#000",
+              textDecoration: "none",
+            }}
+          >
+            {text}{" "}
+          </h3>
+        </Link>
+      )}
+      {isCar && <CartWidget id={id} elements={carNumber} />}
+    </>
+  );
+};
 
-export default MenuItem
+export default MenuItem;

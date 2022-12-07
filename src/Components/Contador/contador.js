@@ -1,10 +1,6 @@
 import { React, useState } from "react";
 
-export const Contador = ({}) => {
-  const [numero, setNumero] = useState(0);
-  const handleChange = () => {
-    setNumero(numero + 1);
-  };
+export const Contador = ({ handleChange, numero }) => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "column" }}>

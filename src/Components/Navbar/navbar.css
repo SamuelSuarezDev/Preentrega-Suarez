@@ -9,7 +9,7 @@
   position: fixed;
 }
 .content {
-  width: 80vw;
+  width: 90vw;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -17,8 +17,8 @@
 .menu-items {
   width: 100vw;
   display: flex;
+  align-items: center;
   justify-content: space-around;
-  text-transform: uppercase;
 }
 .more {
   display: none;
@@ -51,9 +51,12 @@
   }
   .menu-items {
     width: 100vw;
+    margin: 5px;
     height: auto;
-    margin-left: 40px;
+    display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
     position: relative;
   }
   .container {

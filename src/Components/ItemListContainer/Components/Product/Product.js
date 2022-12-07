@@ -1,25 +1,37 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Product = () => {
+const Product = ({ title, price, image, to, category }) => {
   return (
-    <div>
-      <div
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "30%",
+        height: "auto",
+        padding: "10px",
+        margin: "5%",
+        alignItems: "center",
+        backgroundColor: "#dbdbdb",
+        borderRadius: "20%",
+        boxShadow: "5px 5px 15px black",
+      }}
+    >
+      <img
+        src={image}
+        alt=""
         style={{
-          display: "block",
-          flexDirection: "column",
-          maxWidth: "100%",
-          justifyContent: "center",
-          backgroundColor: "#dbdbdb",
-          borderRadius: "5%",
+          width: "60%",
+          height: "50%",
+          objectFit: "cover",
+          borderRadius: "50%",
         }}
-      >
-        <img
-          src="https://assets.adidas.com/images/w_600,f_auto,q_auto/28530d07245942fc944dae680084fb30_9366/Balon_Al_Rihla_Pro_Blanco_H57783_01_standard.jpg"
-          alt=""
-        />
-        <p style={{ fontSize: "30px" }}>Balón Qatar 2022</p>
-        <p style={{ fontSize: "20px" }}>20$</p>
-      </div>
+      />
+      <p style={{ fontSize: "30px" }}>{title}</p>
+      <p style={{ fontSize: "20px" }}>{price}</p>
+      <button style={{ fontSize: "20px" }}>
+        <Link to={to}>Ver más</Link>
+      </button>
     </div>
   );
 };
