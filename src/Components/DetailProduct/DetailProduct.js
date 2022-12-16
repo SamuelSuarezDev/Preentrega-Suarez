@@ -4,6 +4,7 @@ import { arrayProducts } from "../ItemListContainer/ItemListContainer";
 import { useParams } from "react-router-dom";
 import { Counter } from "./Components/Counter";
 import { state } from "../Navbar/Navbar";
+import { ArrayMock } from "../ArrayMock/ArrayMock";
 
 const DetailProduct = () => {
   console.log(arrayProducts);
@@ -20,6 +21,7 @@ const DetailProduct = () => {
         display: "flex",
       }}
     >
+      <ArrayMock array={arrayProducts} />
       <p></p>
       <img src={product?.image} alt="" style={{ width: "70%" }} />
       <div style={{ display: "flex", flexDirection: "column" }}>
