@@ -10,7 +10,7 @@ import { AddItemButton } from "./Components/AddItemButton";
 export const ItemDetail = () => {
   const { arrayProducts } = useProductContext();
   const { id } = useParams(0);
-  let product = arrayProducts[0].find((pro) => pro.id == Number(id));
+  let product = arrayProducts.find((pro) => pro.id == Number(id));
   return (
     <div
       style={{

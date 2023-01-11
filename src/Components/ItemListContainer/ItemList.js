@@ -20,7 +20,7 @@ export const ItemList = ({ texto }) => {
     >
       {location.pathname != "/" ? (
         <>
-          {arrayProducts[0].map(({ id, image, title, price, category }) => (
+          {arrayProducts.map(({ id, image, title, price, category }) => (
             <>
               {"/category/" + category == location.pathname && (
                 <Product
@@ -36,7 +36,7 @@ export const ItemList = ({ texto }) => {
         </>
       ) : (
         <>
-          {arrayProducts[0].map(({ id, image, title, price, category }) => (
+          {arrayProducts.map(({ id, image, title, price, category }) => (
             <>
               <>
                 <div key={id}>
@@ -55,4 +55,3 @@ export const ItemList = ({ texto }) => {
     </div>
   );
 };
-
