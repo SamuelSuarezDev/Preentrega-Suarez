@@ -19,9 +19,11 @@ const MenuItem = ({ mode, text, carNumber, to, id }) => {
     <>
       {isTitle && (
         <div>
-          <h1 id={id} style={{ cursor: "pointer" }}>
-            {text}
-          </h1>
+          <Link to={to}>
+            <h1 id={id} style={{ cursor: "pointer", color: "#000" }}>
+              {text}
+            </h1>
+          </Link>
         </div>
       )}
       {isSection && (
@@ -38,7 +40,11 @@ const MenuItem = ({ mode, text, carNumber, to, id }) => {
           </h3>
         </Link>
       )}
-      {isCar && <CartWidget id={id} elements={carNumber} />}
+      {isCar && (
+        <Link to={to}>
+          <CartWidget id={id} elements={carNumber} />
+        </Link>
+      )}
     </>
   );
 };

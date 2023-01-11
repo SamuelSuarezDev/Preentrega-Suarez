@@ -1,20 +1,34 @@
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import DetailProduct from "./Components/DetailProduct/DetailProduct";
-import ItemListContainer from "./Components/ItemListContainer/ItemListContainer";
+import CartContextProvider from "./Context/CartContext";
+import ProductContextProvider from "./Context/ProductContext";
+import { CartWidget } from "./Components/CartWidget/CartWidget";
+import { Brief } from "./Components/Checkout/Brief/Brief";
+import ItemDetailContainer from "./Components/ItemDetailContainer/ItemDetailContainer";
+import { ItemListContainer } from "./Components/ItemListContainer/ItemListContainer";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar carNumber={7}></Navbar>
-        <Routes>
-          <Route exact path="/" element={<ItemListContainer />} />
-          <Route exact path="/category/:id" element={<ItemListContainer />} />
-          <Route exact path="/item/:id" element={<DetailProduct />} />
-        </Routes>
-      </BrowserRouter>
+      <CartContextProvider>
+        <BrowserRouter>
+          <Navbar></Navbar>
+          <ProductContextProvider>
+            <Routes>
+              <Route exact path="/" element={<ItemListContainer />} />
+              <Route
+                exact
+                path="/category/:id"
+                element={<ItemListContainer />}
+              />
+              <Route exact path="/item/:id" element={<ItemDetailContainer />} />
+              <Route exact path="/car" element={<CartWidget />} />
+              <Route exact path="/carBuy/:id" element={<Brief />} />
+            </Routes>
+          </ProductContextProvider>
+        </BrowserRouter>
+      </CartContextProvider>
     </>
   );
 }
