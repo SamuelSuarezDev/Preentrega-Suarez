@@ -17,7 +17,7 @@ export const Brief = () => {
   const [email, setEmail] = useState("");
   const db = getFirestore();
   const dbref = collection(db, "Buys");
-  let product = arrayProducts[0].find((pro) => pro.id == Number(idPage));
+  let product = arrayProducts.find((pro) => pro.id == Number(idPage));
   const data = {
     name: name,
     phone: phone,
