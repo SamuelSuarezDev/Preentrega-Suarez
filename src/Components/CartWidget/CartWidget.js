@@ -1,10 +1,17 @@
 /* eslint-disable no-restricted-globals */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCartContext } from "../../Context/CartContext";
 import { Link } from "react-router-dom";
 export const CartWidget = () => {
+  const [id, setid] = useState("0");
   const [width, setwidth] = useState(screen.width);
   const { cartList, clearCart, clearItem } = useCartContext();
+  useEffect(() => {
+    cartList.map((prod) => {
+      setid(prod.id);
+    });
+  }, [cartList]);
+
   const handleDelete = (id) => {
     clearItem(id);
   };
@@ -65,20 +72,7 @@ export const CartWidget = () => {
                       marginLeft: "45%",
                       marginTop: "12%",
                     }}
-                  >
-                    <Link to={"/carBuy/" + prod.id}>
-                      <button
-                        style={{
-                          padding: "8px",
-                          background: "#dbdbdb",
-                          border: "5px solid gray",
-                          boxShadow: "4px 2px 5px gray",
-                        }}
-                      >
-                        Finalizar compra
-                      </button>
-                    </Link>
-                  </div>
+                  ></div>
                   <div>
                     <img
                       onClick={() => handleDelete(prod.id)}
@@ -164,18 +158,6 @@ export const CartWidget = () => {
                       justifyContent: "space-around",
                     }}
                   >
-                    <Link to={"/carBuy/" + prod.id}>
-                      <button
-                        style={{
-                          padding: "8px",
-                          background: "#dbdbdb",
-                          border: "5px solid gray",
-                          boxShadow: "4px 2px 5px gray",
-                        }}
-                      >
-                        Finalizar compra
-                      </button>
-                    </Link>
                     <img
                       onClick={() => handleDelete(prod.id)}
                       width={"30px"}
@@ -187,6 +169,19 @@ export const CartWidget = () => {
               )}
             </>
           ))}
+          <br />
+          <Link to={"/carBuy"}>
+            <button
+              style={{
+                padding: "8px",
+                background: "#dbdbdb",
+                border: "5px solid gray",
+                boxShadow: "4px 2px 5px gray",
+              }}
+            >
+              Finalizar compra
+            </button>
+          </Link>
           <br />
           <div>
             <p onClick={clearCart}>

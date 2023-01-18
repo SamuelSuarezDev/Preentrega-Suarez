@@ -1,13 +1,28 @@
 /* eslint-disable eqeqeq */
-import React from "react";
+import React, { useState } from "react";
 import Product from "./Components/Product/Product";
 import { useLocation } from "react-router-dom";
-import { useProductContext } from "../../Context/ProductContext";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { useEffect } from "react";
+export const ItemList = () => {
+  const location = useLocation();
+  const [arrayProducts, setarrayProducts] = useState([]);
+  let array = [];
+  const db = getFirestore();
+  const handleDatabase = async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    querySnapshot.forEach((doc) => {
+      array.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+      setarrayProducts(array);
+    });
+    console.log(arrayProducts);
+  };
+  handleDatabase();
+  console.log("location", location);
 
-export const ItemList = ({ texto }) => {
-  const { arrayProducts } = useProductContext();
-  let location = useLocation();
-  setInterval(() => {}, 5000);
   return (
     <div
       style={{
@@ -20,18 +35,18 @@ export const ItemList = ({ texto }) => {
     >
       {location.pathname != "/" ? (
         <>
-          {arrayProducts.map(({ id, image, title, price, category }) => (
-            <>
-              {"/category/" + category == location.pathname && (
+          {arrayProducts.map((pro) => (
+            <div>
+              {"/category/" + pro.category == location.pathname && (
                 <Product
-                  key={id}
-                  image={image}
-                  title={title}
-                  price={price}
-                  to={"/item/" + id}
+                  key={pro.id}
+                  image={pro.image}
+                  title={pro.title}
+                  price={pro.price}
+                  to={"/item/" + pro.id}
                 />
               )}
-            </>
+            </div>
           ))}
         </>
       ) : (

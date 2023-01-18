@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 import { useParams } from "react-router-dom";
-import { useProductContext } from "../../../Context/ProductContext";
 export const Description = () => {
-  const { arrayProducts } = useProductContext();
+  let array = [];
+  const [arrayProducts, setarrayProducts] = useState([]);
+  const db = getFirestore();
+  const handleDatabase = async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    querySnapshot.forEach((doc) => {
+      array.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+      setarrayProducts(array);
+      console.log(arrayProducts);
+      return;
+    });
+  };
+  handleDatabase();
   const { id } = useParams(0);
-  let product = arrayProducts.find((pro) => pro.id == Number(id));
+  const product = arrayProducts.find((pro) => pro.id === id);
   return (
     <div>
       <div

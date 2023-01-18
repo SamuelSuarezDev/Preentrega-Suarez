@@ -1,23 +1,39 @@
 import React, { useState } from "react";
 import { useCartContext } from "../../../Context/CartContext";
-import { useProductContext } from "../../../Context/ProductContext";
+import { useParams } from "react-router-dom";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 export const Brief = () => {
-  const { clearItem } = useCartContext();
+  let prevarray = [];
+  const [arrayProducts, setarrayProducts] = useState([]);
+  const db = getFirestore();
+  const handleDatabase = async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    querySnapshot.forEach((doc) => {
+      prevarray.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+      setarrayProducts(prevarray);
+      console.log(arrayProducts);
+      return;
+    });
+  };
+  handleDatabase();
   // eslint-disable-next-line no-restricted-globals
-  const idPage = location.pathname.replace(/[^0-9]+/g, "");
+  const idPage = location.pathname;
+  const { clearCart } = useCartContext();
+  let product = arrayProducts.find((pro) => "/carBuy/" + pro.id === idPage);
+  console.log(product);
   const [showId, setShowId] = useState(false);
-  const { arrayProducts } = useProductContext();
   let array = [];
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const db = getFirestore();
   const dbref = collection(db, "Buys");
-  let product = arrayProducts.find((pro) => pro.id == Number(idPage));
+  console.log(product);
   const data = {
     name: name,
     phone: phone,
@@ -39,7 +55,7 @@ export const Brief = () => {
           }
         });
         setShowId(true);
-        clearItem(idPage);
+        clearCart();
       });
     } else {
       alert("Todos los campos son obligatortios");
@@ -58,15 +74,7 @@ export const Brief = () => {
         textAlign: "center",
       }}
     >
-      <p style={{ fontSize: "20px", margin: "10px" }}>
-        Comprar {product.title}
-      </p>
-      <img
-        style={{ margin: "40px" }}
-        width={"200px"}
-        src={product.image}
-        alt=""
-      />
+      <img style={{ margin: "40px" }} width={"200px"} alt="" />
       {!showId && (
         <>
           <label for="">Nombre</label>
@@ -79,13 +87,13 @@ export const Brief = () => {
           <input
             onChange={(event) => setPhone(event.target.value)}
             style={{ padding: "10px" }}
-            type="text"
+            type="number"
           ></input>
           <label for="">Correo</label>
           <input
             onChange={(event) => setEmail(event.target.value)}
             style={{ padding: "10px" }}
-            type="text"
+            type="email"
           ></input>
           <button
             onClick={handleBuy}
@@ -98,10 +106,7 @@ export const Brief = () => {
       )}
       {showId && (
         <>
-          <p>
-            Felicidades por comprar el {product.title}, su id de compra es de{" "}
-            {id}
-          </p>
+          <p>Felicidades por su compra, el su id de compra es de {id}</p>
         </>
       )}
       <Link to={"/"}>Volver a inicio</Link>

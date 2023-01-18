@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useProductContext } from "../../Context/ProductContext";
 import { useParams } from "react-router-dom";
 import { ItemQuantitySelector } from "./Components/ItemQuantitySelector";
 import { state } from "../Navbar/Navbar";
 import { Description } from "./Components/Description";
 import { AddItemButton } from "./Components/AddItemButton";
+import { getFirestore, getDocs, collection } from "firebase/firestore";
 
 export const ItemDetail = () => {
-  const { arrayProducts } = useProductContext();
+  let array = [];
+  const [arrayProducts, setarrayProducts] = useState([]);
+  const db = getFirestore();
+  const handleDatabase = async () => {
+    const querySnapshot = await getDocs(collection(db, "Products"));
+    querySnapshot.forEach((doc) => {
+      array.push({
+        id: doc.id,
+        ...doc.data(),
+      });
+      setarrayProducts(array);
+      console.log(arrayProducts);
+      return;
+    });
+  };
+  handleDatabase();
   const { id } = useParams(0);
-  let product = arrayProducts.find((pro) => pro.id == Number(id));
+  const product = arrayProducts.find((pro) => pro.id === id);
+  console.log(product);
   return (
     <div
       style={{
@@ -23,7 +39,7 @@ export const ItemDetail = () => {
         fontSize: "28px",
       }}
     >
-      <Description />
+      <Description array={arrayProducts} />
       <ItemQuantitySelector product={{ ...product }} />
       <AddItemButton product={{ ...product }} />
       {state != 0 ? (
