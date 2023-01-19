@@ -19,14 +19,12 @@ export const ItemDetail = () => {
         ...doc.data(),
       });
       setarrayProducts(array);
-      console.log(arrayProducts);
       return;
     });
   };
   handleDatabase();
   const { id } = useParams(0);
   const product = arrayProducts.find((pro) => pro.id === id);
-  console.log(product);
   return (
     <div
       style={{

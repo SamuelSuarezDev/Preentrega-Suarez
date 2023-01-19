@@ -13,7 +13,6 @@ export const Description = () => {
         ...doc.data(),
       });
       setarrayProducts(array);
-      console.log(arrayProducts);
       return;
     });
   };

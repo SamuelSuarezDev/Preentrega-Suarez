@@ -18,10 +18,8 @@ export const ItemList = () => {
       });
       setarrayProducts(array);
     });
-    console.log(arrayProducts);
   };
   handleDatabase();
-  console.log("location", location);
 
   return (
     <div

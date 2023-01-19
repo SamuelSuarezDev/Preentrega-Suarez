@@ -16,7 +16,6 @@ export const Brief = () => {
         ...doc.data(),
       });
       setarrayProducts(prevarray);
-      console.log(arrayProducts);
       return;
     });
   };
@@ -25,7 +24,6 @@ export const Brief = () => {
   const idPage = location.pathname;
   const { clearCart } = useCartContext();
   let product = arrayProducts.find((pro) => "/carBuy/" + pro.id === idPage);
-  console.log(product);
   const [showId, setShowId] = useState(false);
   let array = [];
   const [id, setId] = useState("");
@@ -33,7 +31,6 @@ export const Brief = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const dbref = collection(db, "Buys");
-  console.log(product);
   const data = {
     name: name,
     phone: phone,
