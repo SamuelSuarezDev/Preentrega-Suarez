@@ -21,7 +21,6 @@ export const Brief = () => {
       price: doc.price,
     });
   });
-  console.log(array);
   const total = cartList.reduce(
     (total, item) => total + item.quantity * item.price,
     0
