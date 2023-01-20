@@ -1,56 +1,46 @@
 import React, { useState } from "react";
 import { useCartContext } from "../../../Context/CartContext";
-import { useParams } from "react-router-dom";
-import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
 export const Brief = () => {
-  let prevarray = [];
-  const [arrayProducts, setarrayProducts] = useState([]);
+  const { clearCart, cartList } = useCartContext();
   const db = getFirestore();
-  const handleDatabase = async () => {
-    const querySnapshot = await getDocs(collection(db, "Products"));
-    querySnapshot.forEach((doc) => {
-      prevarray.push({
-        id: doc.id,
-        ...doc.data(),
-      });
-      setarrayProducts(prevarray);
-      return;
-    });
-  };
-  handleDatabase();
   // eslint-disable-next-line no-restricted-globals
-  const idPage = location.pathname;
-  const { clearCart } = useCartContext();
-  let product = arrayProducts.find((pro) => "/carBuy/" + pro.id === idPage);
   const [showId, setShowId] = useState(false);
-  let array = [];
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const dbref = collection(db, "Buys");
-  const data = {
-    name: name,
-    phone: phone,
-    email: email,
-  };
+  let array = [];
+  cartList.map((doc) => {
+    array.push({
+      id: doc.id,
+      title: doc.title,
+      price: doc.price,
+    });
+  });
+  console.log(array);
+  const total = cartList.reduce(
+    (total, item) => total + item.quantity * item.price,
+    0
+  );
   const handleBuy = async () => {
+    const data = {
+      name: name,
+      phone: phone,
+      email: email,
+    };
     if (name != "" && phone != "" && email != "") {
-      addDoc(dbref, data).then(async (docRef) => {
-        const querySnapshot = await getDocs(collection(db, "Buys"));
-        querySnapshot.forEach((doc) => {
-          array.push({
-            id: doc.id,
-            ...doc.data(),
-          });
-        });
-        array.map((doc) => {
-          if (doc.name == name) {
-            setId(doc.id);
-          }
-        });
+      const order = {
+        buyer: data,
+        items: array,
+        date: new Date(),
+        total: total,
+      };
+      addDoc(dbref, order).then(({ id }) => {
+        setId(id);
         setShowId(true);
         clearCart();
       });
